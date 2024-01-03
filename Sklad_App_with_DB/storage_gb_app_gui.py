@@ -167,13 +167,17 @@ class StorageInDialog(tk.Toplevel):
         
         label_project = tk.Label(self, text="Project ALIAS:", font= ("Consolas", 12))
         label_project.place(x=15, y=155)
-        self.entry_project = tk.Entry(self, font=("Consolas", 12))
-        self.entry_project.place(x=180, y=155, width=200, height=30)
+        load_projects_names = sklad_manager.load_combobox_projects()
+        load_projects_names_list = [item[0] for item in load_projects_names]
+        self.combobox_project = ttk.Combobox(self, font=("Consolas", 12), state="readonly", values=load_projects_names_list)
+        self.combobox_project.place(x=180, y=155, width=200, height=30)
         
         label_engineer = tk.Label(self, text="Engineer ALIAS:", font= ("Consolas", 12))
         label_engineer.place(x=15, y=200)
-        self.entry_engineer = tk.Entry(self, font=("Consolas", 12))
-        self.entry_engineer.place(x=180, y=200, width=200, height=30)
+        load_engineers_names = sklad_manager.load_combobox_engineers()
+        load_engineers_names_list = [f'{item[0]} {item[1]}' for item in load_engineers_names]
+        self.combobox_engineer = ttk.Combobox(self, font=("Consolas", 12), state='readonly', values=load_engineers_names_list)
+        self.combobox_engineer.place(x=180, y=200, width=200, height=30)
         
         label_date = tk.Label(self, text="Date IN:", font= ("Consolas", 12))
         label_date.place(x=15, y=245)
@@ -185,8 +189,8 @@ class StorageInDialog(tk.Toplevel):
         
         label_location = tk.Label(self, text="Location:", font= ("Consolas", 12))
         label_location.place(x=15, y=290)
-        self.entry_location = tk.Entry(self, font=("Consolas", 12))
-        self.entry_location.place(x=180, y=290, width=200, height=30)
+        self.combobox_location = ttk.Combobox(self, font=("Consolas", 12), state='readonly', values=['Kopřivnice', 'Rožnov'])
+        self.combobox_location.place(x=180, y=290, width=200, height=30)
         
         label_position = tk.Label(self, text="Position:", font= ("Consolas", 12))
         label_position.place(x=15, y=335)
@@ -214,10 +218,12 @@ class StorageInDialog(tk.Toplevel):
     def save_butt_command(self):
         NUM_GB = self.entry_gibo.get()
         TMA_NUMBER = self.entry_svs.get()
-        PROJECT_ALIAS = self.entry_project.get()
-        ALIAS_ENG = self.entry_engineer.get()
+        PROJECT_ALIAS = sklad_manager.get_combobox_projects(self.combobox_project.get())
+        #print(PROJECT_ALIAS)
+        ALIAS_ENG = sklad_manager.get_combobox_engineers(self.combobox_engineer.get())
+        #print(ALIAS_ENG)
         DATE_IN = self.current_date
-        LOCATION = self.entry_location.get()
+        LOCATION = self.combobox_location.get()
         POSITION = self.entry_position.get()
         COMMENT = self.entry_comment.get()
         ALIAS_WORKER = self.worker_user

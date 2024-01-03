@@ -127,6 +127,23 @@ class SkladManager:
         '''
         self.cursor.execute(load_query)
         return self.cursor.fetchall()
+    
+    def load_combobox_projects(self):
+        self.cursor.execute("SELECT Project_name FROM projects")
+        return self.cursor.fetchall()
+    
+    def get_combobox_projects(self, data):
+        self.cursor.execute("SELECT Project_alias FROM projects WHERE Project_name = ?", (data,))
+        return self.cursor.fetchone()[0]
+    
+    def load_combobox_engineers(self):
+        self.cursor.execute("SELECT Name_eng, SurName_eng FROM engineers")
+        return self.cursor.fetchall()
+    
+    def get_combobox_engineers(self, data):
+        fullname = data.split()
+        self.cursor.execute("SELECT Alias_eng FROM engineers WHERE Name_eng = ? AND SurName_eng = ?", (fullname[0], fullname[1]))
+        return self.cursor.fetchone()[0]
 
     def close_connection(self):
         self.conn.close()
