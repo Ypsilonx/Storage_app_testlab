@@ -1,6 +1,7 @@
 import sqlite3
 import os
 import getpass
+from datetime import datetime, timedelta
 
 # NUM_GB = 0
 # TMA_NUMBER = ''
@@ -126,6 +127,35 @@ class SkladManager:
                 JOIN projects ON LOWER(sklad.Project_alias) = LOWER(projects.Project_alias);
         '''
         self.cursor.execute(load_query)
+        return self.cursor.fetchall()
+    
+    def get_expiration_data(self, dny_pred_expiraci=0):
+        dnes = datetime.now()
+        load_query = '''
+            SELECT LOWER(sklad.Num_GB), LOWER(sklad.TMA_number), LOWER(sklad.Date_expiration), LOWER(projects.Project_alias), LOWER(engineers.Name_eng), LOWER(engineers.SurName_eng), LOWER(delnici.Name_worker), LOWER(delnici.SurName_worker), LOWER(sklad.Location)
+                FROM sklad
+                JOIN delnici ON LOWER(sklad.Alias_worker) = LOWER(delnici.Alias_worker)
+                JOIN engineers ON LOWER(sklad.Alias_eng) = LOWER(engineers.Alias_eng)
+                JOIN projects ON LOWER(sklad.Project_alias) = LOWER(projects.Project_alias)
+                WHERE Date_expiration <= ?;
+        '''
+        # oprava = '''
+        #     UPDATE sklad SET 
+        #         ID='1',
+        #         Num_GB='1',
+        #         TMA_number='svs-497874256',
+        #         Project_alias='TESLA',
+        #         Alias_eng='lichora',
+        #         Date_IN='2023-01-01',
+        #         Date_expiration='2024-01-01',
+        #         Location='Kopřivnice',
+        #         Position='---',
+        #         Comment='stv(20x)',
+        #         Alias_worker='cibulto'
+        #     WHERE ID=1;
+        # '''
+        # self.cursor.execute(oprava)
+        self.cursor.execute(load_query, (dnes + timedelta(days=dny_pred_expiraci),))
         return self.cursor.fetchall()
     
     def load_combobox_projects(self):

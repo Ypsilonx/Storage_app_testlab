@@ -23,7 +23,7 @@ class InsertProjectDialog(tk.Toplevel):
         alignstring = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
         self.geometry(alignstring)
         
-        label = tk.Label(self, text="Inser project: (please input relevant project)", font= ("Consolas", 14), anchor="center")
+        label = tk.Label(self, text="Insert project: (please input relevant project)", font= ("Consolas", 14), anchor="center")
         label.place(x=15, y=15)
         
         label_project_alias = tk.Label(self, text="Project ALIAS:", font= ("Consolas", 12))
@@ -63,7 +63,7 @@ class InsertEngineerDialog(tk.Toplevel):
         alignstring = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
         self.geometry(alignstring)
         
-        label = tk.Label(self, text="Inser engineer: (please input relevant names)", font= ("Consolas", 14), anchor="center")
+        label = tk.Label(self, text="Insert engineer: (please input relevant names)", font= ("Consolas", 14), anchor="center")
         label.place(x=15, y=15)
         
         label_engineer_alias = tk.Label(self, text="Engineer ALIAS:", font= ("Consolas", 12))
@@ -109,20 +109,20 @@ class InsertWorkerDialog(tk.Toplevel):
         alignstring = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
         self.geometry(alignstring)
         
-        label = tk.Label(self, text="Inser worker: (please input relevant names)", font= ("Consolas", 14), anchor="center")
+        label = tk.Label(self, text="Insert worker: (please input relevant names)", font= ("Consolas", 14), anchor="center")
         label.place(x=15, y=15)
         
-        label_worker_alias = tk.Label(self, text="Engineer ALIAS:", font= ("Consolas", 12))
+        label_worker_alias = tk.Label(self, text="Worker ALIAS:", font= ("Consolas", 12))
         label_worker_alias.place(x=15, y=65)
         self.entry_worker_alias = tk.Entry(self, font=("Consolas", 12))
         self.entry_worker_alias.place(x=180, y=65, width=200, height=30)
         
-        label_worker_name = tk.Label(self, text="Engineer name:", font= ("Consolas", 12))
+        label_worker_name = tk.Label(self, text="Worker name:", font= ("Consolas", 12))
         label_worker_name.place(x=15, y=110)
         self.entry_worker_name = tk.Entry(self, font=("Consolas", 12))
         self.entry_worker_name.place(x=180, y=110, width=200, height=30)
         
-        label_worker_surname = tk.Label(self, text="Engineer surname:", font= ("Consolas", 12))
+        label_worker_surname = tk.Label(self, text="Worker surname:", font= ("Consolas", 12))
         label_worker_surname.place(x=15, y=155)
         self.entry_worker_surname = tk.Entry(self, font=("Consolas", 12))
         self.entry_worker_surname.place(x=180, y=155, width=200, height=30)
@@ -234,6 +234,35 @@ class StorageInDialog(tk.Toplevel):
         
     def cancel_butt_command(self):
         self.destroy()
+
+# class ExpireDataDialog(tk.Toplevel):
+#     def __init__(self, parent, *args, **kwargs):
+#         super().__init__(parent, *args, **kwargs)
+#         self.title("Expire DATA:")
+#         self.entry_values = None
+#         width = 1000
+#         height = 515
+#         screenwidth = self.winfo_screenwidth()
+#         screenheight = self.winfo_screenheight()
+#         alignstring = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
+#         self.geometry(alignstring)
+        
+#         expirujici_polozky = sklad_manager.get_expiration_data()
+                
+#         label_frame = tk.Label(self, text="Expire DATA:", font= ("Consolas", 12))
+#         label_frame.place(x=50, y=50)
+        
+#         save = tk.Button(self, text="Save", font= ("Consolas", 15), anchor="center", command=self.save_butt_command)
+#         save.place(x=20, y=470, width=80, height=35)
+#         cancel = tk.Button(self, text="Cancel", font= ("Consolas", 15), anchor="center", command=self.cancel_butt_command)
+#         cancel.place(x=110, y=470, width=80, height=35)
+    
+#     def save_butt_command(self):
+        
+#         self.destroy()
+        
+#     def cancel_butt_command(self):
+#         self.destroy()
    
 class AppSklad(tk.Tk):
     def __init__(self, *args, **kwargs):
@@ -244,7 +273,7 @@ class AppSklad(tk.Tk):
         self.inserted_worker_value = None
         #setting window size
         width=1200
-        height=800
+        height=1000
         screenwidth = self.winfo_screenwidth()
         screenheight = self.winfo_screenheight()
         alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
@@ -267,25 +296,47 @@ class AppSklad(tk.Tk):
         storage_in_button = tk.Button(self, text='Storage IN', font=self.set_fonts(15), command=self.storage_in)
         storage_in_button.place(x=510, y=60, width=150, height=40)
 
+        # expiration_data_button = tk.Button(self, text='EXPIRE data', font=self.set_fonts(12), command=self.expire_data)
+        # expiration_data_button.place(x=675, y=60, width=150, height=40)
+
         create_db_button = tk.Button(self, text='Create/Control storage', font=self.set_fonts(12), command=self.control_db)
         create_db_button.place(x=935, y=60, width=250, height=40)
         
-        get_data_db_button = tk.Button(self, text='Získat data', font=self.set_fonts(12), command=self.get_data)
+        get_data_db_button = tk.Button(self, text='Get data', font=self.set_fonts(12), command=self.get_data)
         get_data_db_button.place(x=935, y=110, width=250, height=40)
 
         separator = ttk.Separator(self, orient='horizontal')
-        separator.pack(fill='x', padx=3, pady=105)
+        separator.pack(fill='x', padx=3, pady=165)
         
         self.find_fulltext = tk.Entry(self, font=self.set_fonts(12))
         self.find_fulltext.place(x=15, y=125, width=400, height=30)
         
         fulltext_button = tk.Button(self, text='FIND', font=self.set_fonts(12), command=self.fulltext_find)
         fulltext_button.place(x=430, y=125, width=70, height=30)
+        
+        expire_filter_button = tk.Button(self, text='EXPIRE', font=self.set_fonts(12), command=self.expire_find)
+        expire_filter_button.place(x=515, y=125, width=70, height=30)
 
+        result_label = tk.Label(self, text='ALL DATA in storage:', font=self.set_fonts(15), anchor='center', background='yellow')
+        result_label.place(x=25, y=435, width=270, height=35)
+        
+        self.result_pole = tk.Frame(self, borderwidth=5, relief='ridge')
+        self.result_pole.place(x=15, y=480, width=1170, height=470)
+        
+        separator_t = ttk.Separator(self, orient='horizontal')
+        separator_t.pack(fill='x', padx=3, pady=95)
+        
+        expire_label = tk.Label(self, text='EXPIRE DATA in storage:', font=self.set_fonts(15), anchor='center', background='yellow')
+        expire_label.place(x=25, y=175, width=270, height=35)
+        
+        self.expire_pole = tk.Frame(self, borderwidth=5, relief='ridge', background='red')
+        self.expire_pole.place(x=15, y=220, width=1170, height=200)
+        
         self.create_dataframe()
-    
-        update_button = tk.Button(self, text='Updat DB', command=self.update_table)
-        update_button.place(x=30, y=290, width=150, height=30)
+        self.expire_find()
+        
+        update_button = tk.Button(self, text='Update DB', command=self.update_table, background='white', font=self.set_fonts(15))
+        update_button.place(x=520, y=435, width=450, height=35)
 
     def create_dataframe(self):
         self.data = sklad_manager.query()
@@ -302,10 +353,11 @@ class AppSklad(tk.Tk):
         self.df["Č. GB"] = self.df["Č. GB"].astype(int)
         self.df_sorted = self.df.sort_values(by='Č. GB')
 
-        result_pole = tk.Frame(self, borderwidth=5, relief='ridge')
-        result_pole.place(x=15, y=335, width=1170, height=450)
+        # result_pole = tk.Frame(self, borderwidth=5, relief='ridge')
+        # result_pole.place(x=15, y=335, width=1170, height=450)
         # Vytvoření tk.Table widgetu
-        self.table = Table(result_pole, dataframe=self.df_sorted)
+        self.table = Table(self.result_pole, dataframe=self.df_sorted)
+        self.table.config(bg='white')
         self.table.show()
     
     def fulltext_find(self):
@@ -316,9 +368,31 @@ class AppSklad(tk.Tk):
         condition = self.df_sorted[new_columns].apply(lambda x: x.astype(str).str.contains(search_string, case=False, na=False)).any(axis=1)
         result_df = self.df_sorted[condition]
         self.table.destroy()
-        result_pole = tk.Frame(self, borderwidth=5, relief='ridge')
-        result_pole.place(x=15, y=335, width=1170, height=450)
-        self.table = Table(result_pole, dataframe=result_df)
+        # result_pole = tk.Frame(self, borderwidth=5, relief='ridge')
+        # result_pole.place(x=15, y=335, width=1170, height=450)
+        self.table = Table(self.result_pole, dataframe=result_df)
+        self.table.show()
+        
+    def expire_find(self):
+        self.data = sklad_manager.get_expiration_data()
+        self.columns = ["Č. GB", "Č. testu", "Datum expirace", "Projekt", "Jméno ENG", "Přijemní ENG", "Jméno TECH", "Přijmení TECH", "Lokace"]
+        self.df = pd.DataFrame(self.data, columns=self.columns)
+        column_name_eng = "Jméno ENG"
+        column_surname_eng = "Přijemní ENG"
+        column_name_worker = "Jméno TECH"
+        column_surname_worker = "Přijmení TECH"
+        self.df["Odpovědná osoba"] = self.df[column_name_eng] + " " + self.df[column_surname_eng]
+        self.df["Zaskladnil"] = self.df[column_name_worker] + " " + self.df[column_surname_worker]
+        self.df = self.df.drop(columns=[column_name_eng, column_surname_eng])
+        self.df = self.df.drop(columns=[column_name_worker, column_surname_worker])
+        self.df["Č. GB"] = self.df["Č. GB"].astype(int)
+        self.df_sorted = self.df.sort_values(by='Č. GB')
+
+        # expire_pole = tk.Frame(self, borderwidth=5, relief='ridge', background='red')
+        # expire_pole.place(x=15, y=175, width=1170, height=150)
+        # Vytvoření tk.Table widgetu
+        self.table = Table(self.expire_pole, dataframe=self.df_sorted)
+        self.table.config(bg='red')
         self.table.show()
         
     def update_table(self):
@@ -341,6 +415,10 @@ class AppSklad(tk.Tk):
         storage_in_window = StorageInDialog(self)
         storage_in_window.focus()
     
+    def expire_data(self):
+        expire_data_window = ExpireDataDialog(self)
+        expire_data_window.focus()
+    
     def control_db(self):
         try:
             sklad_manager.create_tables()
@@ -360,7 +438,6 @@ class AppSklad(tk.Tk):
     def set_fonts(self, font_size=12):
         ft = tkFont.Font(family='Consolas', size=font_size)
         return ft
-    
     
 if __name__ == '__main__':
     db_path = os.path.join('G:\\Locations_EU\\OST\\EU_S\\SVS\\01_Personal\\CCT\\APP_list\\Sklad_App_with_DB\\storage_db', 'sklad_GB.db')
